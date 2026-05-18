@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ЕНТ Репетитор</title>
+  <link rel="stylesheet" href="static/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#/" class="logo">
+        <span class="logo-icon">▮</span>
+        <span class="logo-text">ent_tutor</span>
+      </a>
+      <nav class="nav">
+        <a href="#/subject/biology">🧬 Биология</a>
+        <a href="#/subject/geography">🌍 География</a>
+        <a href="#" id="btn-settings" title="Настройки (ключи, модель, расходы)">⚙</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container main-content" id="app">
+    <div class="loader">
+      <div class="spinner"></div>
+      <p>Инициализация…</p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      Локальный сайт для подготовки к ЕНТ · Биология и География
+    </div>
+  </footer>
+
+  <!-- Модалка настроек -->
+  <div class="modal-overlay hidden" id="settings-modal">
+    <div class="modal">
+      <h2>Настройки</h2>
+
+      <div class="settings-section">
+        <label class="modal-label" for="api-key-input">API-ключ Anthropic (Claude)</label>
+        <input type="password" id="api-key-input" placeholder="sk-ant-api03-..." autocomplete="off">
+        <div class="model-hint">// Используется для генерации тем и чата</div>
+      </div>
+
+      <div class="settings-section">
+        <label class="modal-label" for="openai-key-input">API-ключ OpenAI (опционально)</label>
+        <input type="password" id="openai-key-input" placeholder="sk-proj-... (для будущих функций)" autocomplete="off">
+        <div class="model-hint">// Зарезервирован для сложных функций (генерация диаграмм, голосовой режим). Сейчас не используется.</div>
+      </div>
+
+      <div class="settings-section">
+        <label class="modal-label" for="model-select">Модель Claude (от неё зависит цена)</label>
+        <select id="model-select">
+          <option value="haiku">Haiku — быстро и дёшево (~$0.005 за тему)</option>
+          <option value="sonnet">Sonnet — баланс качества и цены (~$0.025 за тему)</option>
+          <option value="opus">Opus — максимальное качество (~$0.13 за тему)</option>
+        </select>
+        <div class="model-hint">// Haiku — рекомендую. Sonnet включай для трудных тем.</div>
+      </div>
+
+      <div class="settings-section">
+        <div class="modal-label">Статистика расходов (только за этим устройством)</div>
+        <div class="usage-stats" id="usage-stats"></div>
+        <div class="model-hint">// Это локальный подсчёт. Реальный баланс смотри на console.anthropic.com</div>
+      </div>
+
+      <div class="modal-actions">
+        <button id="save-key" class="btn-primary">Сохранить</button>
+        <button id="close-settings" class="btn-secondary">Закрыть</button>
+      </div>
+
+      <details class="setup-help">
+        <summary>Как получить API-ключи</summary>
+        <ol class="setup-steps">
+          <li><b>Anthropic Claude:</b> <a href="https://console.anthropic.com/" target="_blank">console.anthropic.com</a> → Sign up → Billing (пополни $5) → API Keys → Create Key → копируй ключ <code>sk-ant-...</code></li>
+          <li><b>OpenAI:</b> <a href="https://platform.openai.com/" target="_blank">platform.openai.com</a> → Sign up → Billing → API Keys → Create new secret key → копируй <code>sk-proj-...</code></li>
+          <li>Ключи хранятся только в твоём браузере (localStorage), никуда не отправляются кроме как напрямую к API.</li>
+        </ol>
+      </details>
+    </div>
+  </div>
+
+  <!-- Опциональный config.local.js (если есть — оттуда подтянутся ключи). Не ругаемся если файла нет. -->
+  <script src="config.local.js" onerror="console.log('config.local.js не найден — используем localStorage')"></script>
+  <!-- Данные тем -->
+  <script src="data/biology.js"></script>
+  <script src="data/geography.js"></script>
+  <!-- Главное приложение -->
+  <script src="static/js/app.js"></script>
+</body>
+</html>
